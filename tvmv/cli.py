@@ -15,8 +15,12 @@ def move(source, destination):
     m.find_sources()
     with click.progressbar(m.files) as files:
         for file in files:
-            m.move_file(file)
-    click.echo("Moved {0} files. Ignored {1} files.".format(m.moved, m.ignored))
+            try:
+                m.move_file(file)
+            except IOError:
+                m.ignored += 1
+    click.echo("Moved {0} files.".format(m.moved))
+    click.echo("Ignored {0} files.".format(m.ignored))
 
 
 @tvmv.command()
