@@ -29,7 +29,7 @@ class Mover(object):
             destination_folder = self.prepare(tv_show.name, tv_show.season)
             source = os.path.join(self.source, tv_show.filename)
             destination = os.path.join(destination_folder, str(tv_show))
-            shutil.copyfile(source, destination)
+            shutil.copy(source, destination)
 
     def prepare(self, name, season):
         name_folder = os.path.join(self.destination, name.replace(' ', '_'))
