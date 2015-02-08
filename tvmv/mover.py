@@ -1,6 +1,6 @@
 import os
 import shutil
-from tvmv.tvshow import TVShow
+from tvmv.tvshow import TVShow, InvalidFilenameException
 
 
 class Mover(object):
@@ -9,12 +9,19 @@ class Mover(object):
         self.source = source
         self.destination = destination
         self.files = []
+        self.ignored = 0
 
         if not os.path.isdir(self.source) or not os.path.isdir(self.destination):
             raise NotADirectoryError
 
     def find_sources(self):
-        self.files = [TVShow(f) for f in os.listdir(self.source) if os.path.isfile(os.path.join(self.source, f))]
+        for f in os.listdir(self.source):
+            try:
+                f = TVShow(f)
+            except InvalidFilenameException:
+                self.ignored += 1
+            else:
+                self.files.append(f)
 
     def move(self):
         self.find_sources()

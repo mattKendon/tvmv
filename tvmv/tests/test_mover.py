@@ -45,3 +45,8 @@ class TestMover(TestCase):
         self.out.prepare('tv show', 1)
         self.assertTrue(os.path.isdir(os.path.join(self.destination, 'tv_show')))
         self.assertTrue(os.path.isdir(os.path.join(self.destination, 'tv_show', 'season_01')))
+
+    def test_it_ignores_files_that_throw_an_exception(self):
+        open(os.path.join(self.source, "something.jpg"), 'a').close()
+        self.out.find_sources()
+        self.assertEqual(len(self.out.files), 4)
