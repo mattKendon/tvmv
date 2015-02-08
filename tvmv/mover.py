@@ -10,6 +10,7 @@ class Mover(object):
         self.destination = destination
         self.files = []
         self.ignored = 0
+        self.moved = 0
 
         if not os.path.isdir(self.source) or not os.path.isdir(self.destination):
             raise NotADirectoryError
@@ -26,10 +27,14 @@ class Mover(object):
     def move(self):
         self.find_sources()
         for tv_show in self.files:
-            destination_folder = self.prepare(tv_show.name, tv_show.season)
-            source = os.path.join(self.source, tv_show.filename)
-            destination = os.path.join(destination_folder, str(tv_show))
-            shutil.copy(source, destination)
+            self.move_file(tv_show)
+
+    def move_file(self, file):
+        destination_folder = self.prepare(file.name, file.season)
+        source = os.path.join(self.source, file.filename)
+        destination = os.path.join(destination_folder, str(file))
+        shutil.copy(source, destination)
+        self.moved += 1
 
     def prepare(self, name, season):
         name_folder = os.path.join(self.destination, name.replace(' ', '_'))
