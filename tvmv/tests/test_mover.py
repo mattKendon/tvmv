@@ -37,5 +37,11 @@ class TestMover(TestCase):
 
     def test_it_copies_the_files_from_source_to_destination(self):
         self.out.move()
-        new_files = [f for f in os.listdir(self.source) if os.path.isfile(os.path.join(self.source, f))]
+        destination_folder = os.path.join(self.destination, 'tv_show', 'season_01')
+        new_files = [f for f in os.listdir(destination_folder) if os.path.isfile(os.path.join(destination_folder, f))]
         self.assertEqual(len(new_files), 4)
+
+    def test_it_prepares_a_show_folder_and_a_season_folder(self):
+        self.out.prepare('tv show', 1)
+        self.assertTrue(os.path.isdir(os.path.join(self.destination, 'tv_show')))
+        self.assertTrue(os.path.isdir(os.path.join(self.destination, 'tv_show', 'season_01')))

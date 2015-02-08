@@ -7,7 +7,7 @@ def readme():
 
 setup(
     name='tvmv',
-    version='0.1',
+    version='0.2',
     packages=['tvmv'],
     url='',
     license='MIT',

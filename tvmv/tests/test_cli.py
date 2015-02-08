@@ -32,5 +32,6 @@ class TestMover(TestCase):
 
     def test_it_moves_all_files_from_source_directory_to_destination_directory(self):
         result = self.runner.invoke(cli.move, [self.source, self.destination])
+        destination_folder = os.path.join(self.destination, 'tv_show', 'season_01')
         self.assertEqual(result.exit_code, 0)
-        self.assertEqual(len([f for f in os.listdir(self.destination)]), 4)
+        self.assertEqual(len([f for f in os.listdir(destination_folder)]), 4)
